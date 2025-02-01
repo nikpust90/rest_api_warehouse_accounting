@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Админ</title>
+</head>
+<body>
+<h1>Админ панель</h1>
+
+<!-- Сообщения об успехе или ошибке -->
+<p style="color: green;">${successMessage}</p>
+<p style="color: red;">${errorMessage}</p>
+
+<!-- Таблица пользователей -->
+<table border="1">
+  <thead>
+  <tr>
+    <th>Имя пользователя</th>
+    <th>Роль</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="user : ${users}">
+    <!--/*@thymesVar id="username" type=""*/-->
+    <td th:text="${user.username}"></td>
+    <td th:text="${user.role}"></td>
+  </tr>
+  </tbody>
+</table>
+
+<!-- Форма изменения роли -->
+<h2>Изменить роль</h2>
+<form action="/auth/admin/assign-role" method="post" th:action="@{/auth/admin/assign-role}">
+  <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+  <label for="username">Имя пользователя:</label>
+  <input type="text" name="username" id="username" required>
+  <br>
+  <label for="role">Новая роль:</label>
+  <select name="role" id="role" required>
+    <option value="ROLE_USER">USER</option>
+    <option value="ROLE_ADMIN">ADMIN</option>
+  </select>
+  <br>
+  <button type="submit">Изменить роль</button>
+</form>
+<!-- Кнопка для перенаправления на начальную страницу -->
+<a href="/">
+  <button type="button">Выход</button>
+</a>
+</body>
+</html>

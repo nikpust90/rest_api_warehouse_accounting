@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<h1>Информация о человеке</h1>
+
+<div>
+<!--  <p><strong>ФИО:</strong> <span th:text="${keyPersonById.getFullName()}">ФИО</span></p>-->
+<!--  <p><strong>Год рождения:</strong> <span th:text="${keyPersonById.getBirthYear()}">Год рождения</span></p>-->
+  <a>
+    <span th:text="${keyPersonById.getFullName()}"></span>
+    <span th:text="',' + ${keyPersonById.getBirthYear()}"></span>
+  </a>
+</div>
+
+
+
+<div th:if="${#lists.isEmpty(books)}">
+  <p>Человек пока не взял ни одной книги</p>
+</div>
+
+<div th:unless="${#lists.isEmpty(books)}">
+  <h2>Книги:</h2>
+
+    <a th:each="book : ${books}">
+      <span th:text="${book.title}">Название книги</span>,
+      <span th:text="${book.author}">Автор книги</span>,
+      <span th:text="${book.year}">Год издания</span>
+    </a>
+
+</div>
+
+<!--<a th:href="@{/people/edit/{id}(id=${keyPersonById.getId()})}">Редактировать</a>-->
+<form th:method="get"
+      th:action="@{/people/edit/{id}(id=${keyPersonById.getId()})}">
+
+  <input type="submit" value="Редактировать" />
+
+</form>
+
+<form th:method="post"
+      th:action="@{/people/delete/{id}(id=${keyPersonById.getId()})}">
+
+  <input type="submit" value="Удалить" />
+
+</form>
+</body>
+</html>

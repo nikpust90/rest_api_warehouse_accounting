@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit boors</title>
+</head>
+<body>
+
+<form th:method="post"
+      th:action="@{/books/edit/{id}(id=${Book.getId()})}"
+      th:object="${Book}">
+  <label for="titleOfInput">Введите название книги</label>
+  <input type="text" id="titleOfInput" th:field="*{title}" />
+  <div class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+
+  <!-- Поле для ввода Author -->
+  <label for="authorOfInput">Введите автора</label>
+  <input type="text" id="authorOfInput" th:field="*{author}" />
+  <div class="error" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></div>
+
+  <!-- Поле для ввода Year -->
+  <label for="yearOfInput">Введите год</label>
+  <input type="number" id="yearOfInput" th:field="*{year}" />
+  <div class="error" th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></div>
+
+
+
+
+  <input type="submit" value="Редактировать!" />
+
+
+
+
+</form>
+
+</body>
+</html>

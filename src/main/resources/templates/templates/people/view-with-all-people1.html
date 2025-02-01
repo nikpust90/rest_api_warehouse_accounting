@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>All people</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2em;
+            color: #333;
+        }
+
+        .people-list {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* Выравнивание по левому краю */
+            margin-top: 20px;
+            padding: 0 20px;
+        }
+
+        .person-item {
+            display: flex;
+            justify-content: flex-start; /* Выравнивание содержимого в строке слева */
+            align-items: center; /* Выравнивание по вертикали */
+            width: 100%; /* Занимает всю ширину */
+            margin: 10px 0;
+            padding: 10px;
+            border-bottom: 1px solid #ccc; /* Линия между элементами */
+        }
+
+        .person-item span {
+            font-size: 1em;
+            margin-right: 15px; /* Отступы между лейблами и значениями */
+            color: #555;
+        }
+
+        .add-person-link {
+            display: inline-block;
+            text-align: center;
+            margin-top: 30px;
+            font-size: 1.5em;
+            color: #4CAF50;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            transition: background-color 0.3s;
+        }
+
+        .add-person-link:hover {
+            background-color: #e0f7e0;
+        }
+    </style>
+
+</head>
+<body>
+
+<!-- Цикл для отображения списка людей -->
+<div th:each="eachPerson : ${keyAllPeoples}">
+    <!-- Ссылка с именем и годом рождения человека -->
+    <a th:href="@{/people/{id}(id=${eachPerson.getId()})}">
+        <span th:text="${eachPerson.getFullName()}"></span>
+        <span th:text="',' + ${eachPerson.getBirthYear()}"></span>
+    </a>
+</div>
+
+<!-- Ссылка для добавления нового человека -->
+<a th:href="@{/people/create}">Добавить человека</a>
+
+
+
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>All Books</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2em;
+      color: #333;
+    }
+
+    .books-list {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start; /* Выравнивание по левому краю */
+      margin-top: 20px;
+      padding: 0 20px;
+    }
+
+    .book-item {
+      display: flex;
+      justify-content: flex-start; /* Выравнивание содержимого в строке слева */
+      align-items: center; /* Выравнивание по вертикали */
+      width: 100%; /* Занимает всю ширину */
+      margin: 10px 0;
+      padding: 10px;
+      border-bottom: 1px solid #ccc; /* Линия между элементами */
+    }
+
+    .book-item span {
+      font-size: 1em;
+      margin-right: 15px; /* Отступы между лейблами и названиями */
+      color: #555;
+    }
+
+    .add-book-link {
+      display: inline-block;
+      text-align: center;
+      margin-top: 30px;
+      font-size: 1.5em;
+      color: #4CAF50;
+      text-decoration: none;
+      padding: 12px 20px;
+      border-radius: 4px;
+      background-color: #f9f9f9;
+      transition: background-color 0.3s;
+    }
+
+    .add-book-link:hover {
+      background-color: #e0f7e0;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Цикл для отображения списка книг -->
+<div th:each="eachBook : ${keyAllBooks}">
+  <!-- Ссылка с именем и годом рождения человека -->
+  <a th:href="@{/books/{id}(id=${eachBook.id})}">
+    <span th:text="${eachBook.title}"></span>
+    <span th:text="', ' + ${eachBook.author}"></span>
+    <span th:text="', ' + ${eachBook.year}"></span>
+
+  </a>
+</div>
+
+<!-- Ссылка для добавления новой книги -->
+<a th:href="@{/books/new}">Добавить книгу</a>
+
+
+
+</body>
+</html>

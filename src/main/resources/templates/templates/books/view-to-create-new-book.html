@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>New Book</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: auto;
+            display: flex;
+            flex-direction: column; /* Вертикальное расположение элементов */
+            align-items: flex-start; /* Выравнивание по левому краю */
+        }
+
+        label {
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.1em;
+            align-self: flex-start; /* Кнопка тоже выровнена по левому краю */
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .error {
+            color: red;
+            font-size: 0.9em;
+            margin-top: -10px; /* Сдвиг ошибки ближе к полю */
+            margin-bottom: 20px;
+        }
+    </style>
+
+
+</head>
+<body>
+
+<!--/*@thymesVar id="keyOfNewBook" type=""*/-->
+<form th:method="post" th:action="@{/books}" th:object="${keyOfNewBook}">
+    <!-- Поле для ввода Title -->
+    <label for="titleOfInput">Введите название книги</label>
+    <input type="text" id="titleOfInput" th:field="*{title}" />
+    <div class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+
+    <!-- Поле для ввода Author -->
+    <label for="authorOfInput">Введите автора</label>
+    <input type="text" id="authorOfInput" th:field="*{author}" />
+    <div class="error" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></div>
+
+    <!-- Поле для ввода Year -->
+    <label for="yearOfInput">Введите год</label>
+    <input type="number" id="yearOfInput" th:field="*{year}" />
+    <div class="error" th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></div>
+
+    <!-- Кнопка отправки формы -->
+    <input type="submit" value="Создать!" />
+</form>
+
+</body>
+</html>
