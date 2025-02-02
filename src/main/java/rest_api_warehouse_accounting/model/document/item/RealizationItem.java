@@ -1,10 +1,11 @@
-package rest_api_warehouse_accounting.model.document;
+package rest_api_warehouse_accounting.model.document.item;
 
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import rest_api_warehouse_accounting.model.Product;
+import rest_api_warehouse_accounting.model.directory.Product;
+import rest_api_warehouse_accounting.model.document.RealizationDocument;
 
 @Entity
 @Table(name = "realization_item") // Имя таблицы в БД

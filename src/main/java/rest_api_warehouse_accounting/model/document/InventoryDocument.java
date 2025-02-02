@@ -5,17 +5,17 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import rest_api_warehouse_accounting.model.document.item.IncomingItem;
+import rest_api_warehouse_accounting.model.document.item.InventoryItem;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "incoming_document") // Указывает имя таблицы в БД
+@Table(name = "inventory_document") // Указывает имя таблицы в БД
 @Data
 @Getter
 @Setter
-public class IncomingDocument {
+public class InventoryDocument {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id") // Явное указание колонки
@@ -28,7 +28,7 @@ public class IncomingDocument {
     @Column(name = "created_at", nullable = false) // Дата создания документа
     private LocalDateTime createdAt;
 
-    // Один документ может содержать несколько позиций поступления
-    @OneToMany(mappedBy = "incomingDocument", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<IncomingItem> items;
+    // Один документ может содержать несколько позиций
+    @OneToMany(mappedBy = "inventoryDocument", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<InventoryItem> items;
 }

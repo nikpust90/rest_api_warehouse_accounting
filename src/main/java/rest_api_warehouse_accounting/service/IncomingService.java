@@ -1,11 +1,13 @@
 package rest_api_warehouse_accounting.service;
 
 
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import rest_api_warehouse_accounting.model.Product;
+import rest_api_warehouse_accounting.model.directory.Product;
 import rest_api_warehouse_accounting.model.document.IncomingDocument;
-import rest_api_warehouse_accounting.model.document.IncomingItem;
+import rest_api_warehouse_accounting.model.document.item.IncomingItem;
 import rest_api_warehouse_accounting.repositories.IncomingDocumentRepository;
 import rest_api_warehouse_accounting.repositories.IncomingItemRepository;
 import rest_api_warehouse_accounting.repositories.ProductRepository;
@@ -15,21 +17,15 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class IncomingService {
     private final IncomingDocumentRepository repository;
     private final ProductRepository productRepository;
     private final IncomingItemRepository itemRepository;
-
-    public IncomingService(IncomingDocumentRepository repository, ProductRepository productRepository, IncomingItemRepository itemRepository) {
-        this.repository = repository;
-        this.productRepository = productRepository;
-        this.itemRepository = itemRepository;
-    }
 
     public Product createProduct(Product product) {
         return productRepository.save(product);
@@ -64,7 +60,7 @@ public class IncomingService {
      * @throws IllegalArgumentException если документ с таким номером и датой уже существует
      */
     @Transactional
-    public IncomingDocument createIncomingDocument(IncomingDocument document) {
+    public IncomingDocument createIncomingDocument(@Valid IncomingDocument document) {
         // Проверка на уникальность документа по номеру и дате
         if (isDocumentExists(document.getDocumentNumber(), document.getCreatedAt())) {
             throw new IllegalArgumentException("Документ с таким номером и датой уже существует.");

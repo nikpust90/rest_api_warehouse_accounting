@@ -5,7 +5,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import rest_api_warehouse_accounting.model.Person;
+import rest_api_warehouse_accounting.model.directory.Person;
 import rest_api_warehouse_accounting.security.PersonDetailsService;
 
 

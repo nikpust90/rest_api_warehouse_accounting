@@ -6,11 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import rest_api_warehouse_accounting.model.Product;
+import rest_api_warehouse_accounting.model.directory.Product;
 import rest_api_warehouse_accounting.model.document.IncomingDocument;
 import rest_api_warehouse_accounting.service.IncomingService;
-
-import java.util.List;
 
 // Аннотация @RestController указывает, что данный класс является REST-контроллером
 // и все его методы будут возвращать JSON-ответы.

@@ -1,4 +1,4 @@
-package rest_api_warehouse_accounting.model;
+package rest_api_warehouse_accounting.model.directory;
 
 import jakarta.persistence.*;
 import lombok.Data;

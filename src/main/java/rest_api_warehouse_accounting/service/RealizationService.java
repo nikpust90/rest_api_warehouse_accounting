@@ -1,18 +1,21 @@
 package rest_api_warehouse_accounting.service;
 
 
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import rest_api_warehouse_accounting.model.Product;
+import rest_api_warehouse_accounting.model.directory.Product;
 import rest_api_warehouse_accounting.model.document.RealizationDocument;
-import rest_api_warehouse_accounting.model.document.RealizationItem;
+import rest_api_warehouse_accounting.model.document.item.RealizationItem;
 import rest_api_warehouse_accounting.repositories.ProductRepository;
 import rest_api_warehouse_accounting.repositories.RealizationDocumentRepository;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class RealizationService {
 
     @Autowired
@@ -31,7 +34,7 @@ public class RealizationService {
      * @throws IllegalArgumentException если товара недостаточно для реализации
      */
     @Transactional
-    public RealizationDocument createRealizationDocument(RealizationDocument document) {
+    public RealizationDocument createRealizationDocument(@Valid RealizationDocument document) {
         // Проверяем наличие достаточного количества товара для реализации
         for (RealizationItem item : document.getItems()) {
             Long productId = item.getProduct().getId();

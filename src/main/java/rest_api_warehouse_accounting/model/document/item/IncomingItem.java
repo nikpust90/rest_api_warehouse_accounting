@@ -1,11 +1,13 @@
-package rest_api_warehouse_accounting.model.document;
+package rest_api_warehouse_accounting.model.document.item;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import rest_api_warehouse_accounting.model.Product;
+import rest_api_warehouse_accounting.model.directory.Product;
+import rest_api_warehouse_accounting.model.document.IncomingDocument;
+import rest_api_warehouse_accounting.model.document.InventoryDocument;
 
 @Entity
 @Table(name = "incoming_item") // Имя таблицы в БД
