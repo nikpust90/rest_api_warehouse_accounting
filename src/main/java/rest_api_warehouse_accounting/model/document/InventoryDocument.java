@@ -1,6 +1,7 @@
 package rest_api_warehouse_accounting.model.document;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -30,5 +31,6 @@ public class InventoryDocument {
 
     // Один документ может содержать несколько позиций
     @OneToMany(mappedBy = "inventoryDocument", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonManagedReference
     private List<InventoryItem> items;
 }

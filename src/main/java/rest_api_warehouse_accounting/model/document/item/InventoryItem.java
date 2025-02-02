@@ -1,5 +1,6 @@
 package rest_api_warehouse_accounting.model.document.item;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -20,12 +21,12 @@ public class InventoryItem {
 
     @ManyToOne
     @JoinColumn(name = "inventory_document_id")
+    @JsonBackReference
     private InventoryDocument inventoryDocument;
 
     // Связь с таблицей продуктов (Product)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
-    @JsonIgnore
     private Product product;
 
 //    private int quantity;
