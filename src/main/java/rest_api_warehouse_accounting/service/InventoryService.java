@@ -2,40 +2,43 @@ package rest_api_warehouse_accounting.service;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import rest_api_warehouse_accounting.dto.InventoryDocumentDTO;
 import rest_api_warehouse_accounting.model.directory.Product;
 import rest_api_warehouse_accounting.model.document.InventoryDocument;
 import rest_api_warehouse_accounting.model.document.item.InventoryItem;
 import rest_api_warehouse_accounting.repositories.InventoryItemRepository;
 import rest_api_warehouse_accounting.repositories.InventoryDocumentRepository;
 import rest_api_warehouse_accounting.repositories.ProductRepository;
+import rest_api_warehouse_accounting.util.InventoryMapper;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class InventoryService {
 
+    private static final Logger logger = LoggerFactory.getLogger(InventoryService.class);
     private final InventoryDocumentRepository inventoryDocumentRepository;
-
     private final InventoryItemRepository inventoryItemRepository;
-
     private final ProductRepository productRepository;
+    private final InventoryMapper inventoryMapper;
 
     /**
      * Получение всех документов инвентаризации.
      *
      * @return список документов инвентаризации
      */
-    public List<InventoryDocument> getAllInventoryDocuments() {
-        return inventoryDocumentRepository.findAll();
-
+    public List<InventoryDocumentDTO> getAllInventoryDocuments() {
+        logger.info("Получение всех документов инвентаризации");
+        List<InventoryDocument> documents = inventoryDocumentRepository.findAll();
+        return inventoryMapper.toDTOList(documents);
     }
 
     /**
@@ -47,33 +50,33 @@ public class InventoryService {
      */
     @Transactional
     public InventoryDocument createInventoryDocument(@Valid InventoryDocument document) {
-
-
+        logger.info("Создание документа инвентаризации: номер={}, дата={}", document.getDocumentNumber(), document.getCreatedAt());
 
         // Проверка на уникальность документа по номеру и дате
         if (isDocumentExists(document.getDocumentNumber(), document.getCreatedAt())) {
+            logger.error("Документ с номером {} и датой {} уже существует", document.getDocumentNumber(), document.getCreatedAt());
             throw new IllegalArgumentException("Документ с таким номером и датой уже существует.");
         }
 
         // Проверка наличия товаров в документе
         if (document.getItems() == null || document.getItems().isEmpty()) {
+            logger.error("Попытка создать документ без товаров");
             throw new IllegalArgumentException("Нельзя создать документ без товаров!");
         }
 
-        InventoryDocument saveDocument = inventoryDocumentRepository.save(document);
+        InventoryDocument savedDocument = inventoryDocumentRepository.save(document);
+        logger.info("Документ сохранен с ID={}", savedDocument.getId());
 
         List<InventoryItem> inventoryItems = new ArrayList<>();
-        for (InventoryItem item: document.getItems()) {
-
-            item.setInventoryDocument(saveDocument); // привязал к item ссылку на документ
-            inventoryItems.add(item); //добавил item в список
-
+        for (InventoryItem item : document.getItems()) {
+            item.setInventoryDocument(savedDocument);
+            inventoryItems.add(item);
         }
 
         inventoryItemRepository.saveAll(inventoryItems);
+        logger.info("Добавлено {} позиций товаров в документ ID={} Номер={}", inventoryItems.size(), savedDocument.getId(), savedDocument.getDocumentNumber());
 
-
-        return saveDocument;
+        return savedDocument;
     }
 
     /**
@@ -84,7 +87,9 @@ public class InventoryService {
      * @return true, если документ уже существует, иначе false
      */
     public boolean isDocumentExists(String documentNumber, LocalDateTime documentDate) {
-        return inventoryDocumentRepository.findByDocumentNumberAndCreatedAt(documentNumber, documentDate).isPresent();
+        boolean exists = inventoryDocumentRepository.findByDocumentNumberAndCreatedAt(documentNumber, documentDate).isPresent();
+        logger.info("Проверка существования документа: номер={}, дата={}, результат={}", documentNumber, documentDate, exists);
+        return exists;
     }
 
     /**
@@ -96,42 +101,28 @@ public class InventoryService {
      */
     @Transactional
     public InventoryDocument fillDocumentWithItems(InventoryDocument document) {
+        logger.info("Заполнение документа инвентаризации ID={} товарами с ненулевым количеством", document.getId());
 
         // Проверка на уникальность документа по номеру и дате
-        if (isDocumentExists(document.getDocumentNumber(), document.getCreatedAt())) {
-            throw new IllegalArgumentException("Документ с таким номером и датой уже существует.");
-        }
+//        if (isDocumentExists(document.getDocumentNumber(), document.getCreatedAt())) {
+//            logger.error("Документ с номером {} и датой {} уже существует", document.getDocumentNumber(), document.getCreatedAt());
+//            throw new IllegalArgumentException("Документ с таким номером и датой уже существует.");
+//        }
 
-        // Получаем список товаров, у которых количество больше нуля
         List<Product> availableProducts = productRepository.findByQuantityGreaterThan(0);
-
-        // Заполняем документ позициями товаров
-        List<InventoryItem> listItems = new ArrayList<>();
-        for(Product product: availableProducts) {
+        List<InventoryItem> listItems = availableProducts.stream().map(product -> {
             InventoryItem item = new InventoryItem();
             item.setProduct(product);
             item.setInventoryDocument(document);
             item.setQuantityPlan(product.getQuantity());
             item.setQuantityFact(0);
             item.setDeviation(product.getQuantity());
+            return item;
+        }).collect(Collectors.toList());
 
-            listItems.add(item);
-
-        }
-
-        // Устанавливаем список позиций в документе
         document.setItems(listItems);
-
-        // Сохраняем документ инвентаризации вместе с позициями.
-        // Если в аннотации @OneToMany указан cascade = CascadeType.ALL, то можно сохранить только документ,
-        // а позиции сохранятся автоматически. В противном случае можно отдельно сохранить позиции.
-        InventoryDocument savedDocument = inventoryDocumentRepository.save(document);
-
-        // Если необходимо отдельно сохранить позиции, можно раскомментировать следующую строку:
-        // inventoryItemRepository.saveAll(items);
-
-        return savedDocument;
-
+        logger.info("Добавлено {} позиций товаров в документ ID={}", listItems.size(), document.getId());
+        return document;
     }
 
     /**

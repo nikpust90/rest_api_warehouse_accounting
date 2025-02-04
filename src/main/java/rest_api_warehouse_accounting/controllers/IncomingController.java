@@ -23,40 +23,7 @@ public class IncomingController {
     @Autowired
     private IncomingService incomingService;
 
-    /**
-     * Создание нового товара.
-     *
-     * @param product - объект Product, который приходит в теле запроса.
-     * @return ResponseEntity с созданным товаром или сообщением об ошибке.
-     */
-    @PostMapping("/products")
-    public ResponseEntity<?> createProduct(@Valid @RequestBody Product product) {
-        try {
-            Product createdProduct = incomingService.createProduct(product);
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdProduct);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ошибка при добавлении товара");
-        }
-    }
 
-    /**
-     * Обновление существующего товара.
-     *
-     * @param id - ID товара, который нужно обновить.
-     * @param productDetails - новые данные для товара.
-     * @return Обновленный товар или сообщение об ошибке.
-     */
-    @PutMapping("/products/{id}")
-    public ResponseEntity<?> updateProduct(@PathVariable Long id, @Valid @RequestBody Product productDetails) {
-        try {
-            Product updatedProduct = incomingService.updateProduct(id, productDetails);
-            return ResponseEntity.ok(updatedProduct);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ошибка при обновлении товара");
-        }
-    }
 
 
     /**

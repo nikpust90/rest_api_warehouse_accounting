@@ -5,11 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import rest_api_warehouse_accounting.dto.InventoryDocumentDTO;
 import rest_api_warehouse_accounting.model.directory.Product;
 import rest_api_warehouse_accounting.model.document.IncomingDocument;
 import rest_api_warehouse_accounting.model.document.InventoryDocument;
 import rest_api_warehouse_accounting.service.IncomingService;
 import rest_api_warehouse_accounting.service.InventoryService;
+
+import java.util.List;
 
 // Аннотация @RestController указывает, что данный класс является REST-контроллером
 // и все его методы будут возвращать JSON-ответы.
@@ -28,7 +31,9 @@ public class InventoryController {
         try {
             // Запрашиваем список всех документов инвентаризации из сервиса
 
-            return ResponseEntity.ok(inventoryService.getAllInventoryDocuments());
+            List<InventoryDocumentDTO> documents = inventoryService.getAllInventoryDocuments();
+            return ResponseEntity.ok(documents);
+            //return ResponseEntity.ok(inventoryService.getAllInventoryDocuments());
         } catch (Exception e) {
             // В случае ошибки возвращаем статус 500 (внутренняя ошибка сервера)
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ошибка при получении документов");

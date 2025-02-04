@@ -27,21 +27,7 @@ public class IncomingService {
     private final ProductRepository productRepository;
     private final IncomingItemRepository itemRepository;
 
-    public Product createProduct(Product product) {
-        return productRepository.save(product);
-    }
 
-    public Product updateProduct(Long id, Product productDetails) {
-        Product product = productRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Продукт не найден: " + id));
-
-        product.setName(productDetails.getName());
-        product.setQuantity(productDetails.getQuantity());
-        product.setSku(productDetails.getSku());
-        product.setCategory(productDetails.getCategory());
-
-        return productRepository.save(product);
-    }
 
     /**
      * Получение всех документов поступления.
@@ -117,4 +103,6 @@ public class IncomingService {
     public boolean isDocumentExists(String documentNumber, LocalDateTime documentDate) {
         return repository.findByDocumentNumberAndCreatedAt(documentNumber, documentDate).isPresent();
     }
+
+
 }
