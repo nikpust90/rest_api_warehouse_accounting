@@ -6,7 +6,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import rest_api_warehouse_accounting.dto.PersonDTO;
-import rest_api_warehouse_accounting.model.Person;
+import rest_api_warehouse_accounting.model.directory.Person;
 import rest_api_warehouse_accounting.repositories.PeopleRepository;
 
 import java.util.Optional;

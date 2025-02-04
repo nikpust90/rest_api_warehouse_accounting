@@ -17,3 +17,4 @@ public class AuthenticationDTO {
 
     private String password;
 }
+

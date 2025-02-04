@@ -28,7 +28,7 @@ public class JWTUtil {
      * @return сгенерированный JWT токен
      */
     public String generateToken(String username, String role) {
-        Date expirationDate = Date.from(ZonedDateTime.now().plusMinutes(60).toInstant()); // Время жизни токена
+        Date expirationDate = Date.from(ZonedDateTime.now().plusMinutes(604800).toInstant()); // Время жизни токена
 
         return JWT.create()
                 .withSubject(SUBJECT)

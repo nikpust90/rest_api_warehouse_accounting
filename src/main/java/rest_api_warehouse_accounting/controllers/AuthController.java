@@ -17,7 +17,7 @@ import rest_api_warehouse_accounting.dto.AuthenticationDTO;
 import rest_api_warehouse_accounting.dto.PersonDTO;
 import rest_api_warehouse_accounting.dto.PersonDeleteDTO;
 import rest_api_warehouse_accounting.dto.PersonUpdateDTO;
-import rest_api_warehouse_accounting.model.Person;
+import rest_api_warehouse_accounting.model.directory.Person;
 import rest_api_warehouse_accounting.service.PeopleService;
 import rest_api_warehouse_accounting.util.JWTUtil;
 import rest_api_warehouse_accounting.validation.PersonValidator;
