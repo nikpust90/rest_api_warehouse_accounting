@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import rest_api_warehouse_accounting.model.directory.Person;
+import rest_api_warehouse_accounting.model.referenceBooks.Person;
 
 import java.util.Collection;
 import java.util.List;

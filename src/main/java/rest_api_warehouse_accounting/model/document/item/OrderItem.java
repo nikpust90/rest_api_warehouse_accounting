@@ -4,15 +4,15 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import rest_api_warehouse_accounting.model.directory.Product;
-import rest_api_warehouse_accounting.model.document.RealizationDocument;
+import rest_api_warehouse_accounting.model.document.OrderDocument;
+import rest_api_warehouse_accounting.model.referenceBooks.Product;
 
 @Entity
-@Table(name = "realization_item") // Имя таблицы в БД
+@Table(name = "order_item") // Имя таблицы в БД
 @Data
 @Getter
 @Setter
-public class RealizationItem {
+public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id") // Первичный ключ
@@ -28,6 +28,6 @@ public class RealizationItem {
 
     // Ссылка на документ списания, которому принадлежит эта позиция
     @ManyToOne
-    @JoinColumn(name = "realization_document_id", nullable = false) // Внешний ключ на документ реализации
-    private RealizationDocument realizationDocument;
+    @JoinColumn(name = "order_document_id", nullable = false) // Внешний ключ на документ реализации
+    private OrderDocument orderDocument;
 }

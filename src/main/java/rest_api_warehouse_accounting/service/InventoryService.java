@@ -2,19 +2,18 @@ package rest_api_warehouse_accounting.service;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import rest_api_warehouse_accounting.dto.InventoryDocumentDTO;
-import rest_api_warehouse_accounting.model.directory.Product;
+import rest_api_warehouse_accounting.dto.document.InventoryDocumentDto;
+import rest_api_warehouse_accounting.model.referenceBooks.Product;
 import rest_api_warehouse_accounting.model.document.InventoryDocument;
 import rest_api_warehouse_accounting.model.document.item.InventoryItem;
-import rest_api_warehouse_accounting.repositories.InventoryItemRepository;
-import rest_api_warehouse_accounting.repositories.InventoryDocumentRepository;
-import rest_api_warehouse_accounting.repositories.ProductRepository;
-import rest_api_warehouse_accounting.util.InventoryMapper;
+import rest_api_warehouse_accounting.repositories.document.item.InventoryItemRepository;
+import rest_api_warehouse_accounting.repositories.document.InventoryDocumentRepository;
+import rest_api_warehouse_accounting.repositories.referenceBooks.ProductRepository;
+import rest_api_warehouse_accounting.mappers.InventoryMapper;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -35,7 +34,7 @@ public class InventoryService {
      *
      * @return список документов инвентаризации
      */
-    public List<InventoryDocumentDTO> getAllInventoryDocuments() {
+    public List<InventoryDocumentDto> getAllInventoryDocuments() {
         logger.info("Получение всех документов инвентаризации");
         List<InventoryDocument> documents = inventoryDocumentRepository.findAll();
         return inventoryMapper.toDTOList(documents);
@@ -127,7 +126,7 @@ public class InventoryService {
 
     /**
      * Обновляет существующий документ инвентаризации.
-     *
+     * <p>
      * 1. Проверяет, существует ли документ в базе по его ID.
      * 2. Если документ не найден, выбрасывает исключение.
      * 3. Обновляет поля документа, включая список товаров (InventoryItem).

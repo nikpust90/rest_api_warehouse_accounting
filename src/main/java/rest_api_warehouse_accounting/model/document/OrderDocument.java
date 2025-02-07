@@ -1,12 +1,11 @@
 package rest_api_warehouse_accounting.model.document;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import lombok.*;
-import org.hibernate.validator.constraints.NotEmpty;
-import rest_api_warehouse_accounting.model.document.item.IncomingItem;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import rest_api_warehouse_accounting.model.document.item.OrderItem;
 import rest_api_warehouse_accounting.model.referenceBooks.Warehouse;
 
 import java.time.LocalDateTime;
@@ -17,10 +16,8 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
-@Table(name = "incoming_document")
-public class IncomingDocument {
+@Table(name = "order_document")
+public class OrderDocument {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,13 +29,10 @@ public class IncomingDocument {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "incomingDocument", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<IncomingItem> items;
+    @OneToMany(mappedBy = "orderDocument", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<OrderItem> items;
 
     @ManyToOne
-    @JoinColumn(name = "warehouse_id")
+    @JoinColumn(name = "warehouse_id", nullable = false)
     private Warehouse warehouse;
-
-
-
 }

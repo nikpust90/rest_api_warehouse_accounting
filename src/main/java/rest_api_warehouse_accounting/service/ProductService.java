@@ -1,23 +1,12 @@
 package rest_api_warehouse_accounting.service;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import rest_api_warehouse_accounting.model.directory.Product;
-import rest_api_warehouse_accounting.model.document.IncomingDocument;
-import rest_api_warehouse_accounting.model.document.item.IncomingItem;
-import rest_api_warehouse_accounting.repositories.IncomingDocumentRepository;
-import rest_api_warehouse_accounting.repositories.IncomingItemRepository;
-import rest_api_warehouse_accounting.repositories.ProductRepository;
+import rest_api_warehouse_accounting.model.referenceBooks.Product;
+import rest_api_warehouse_accounting.repositories.referenceBooks.ProductRepository;
 
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

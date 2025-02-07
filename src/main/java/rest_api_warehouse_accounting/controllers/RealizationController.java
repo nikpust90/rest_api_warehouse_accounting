@@ -6,10 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import rest_api_warehouse_accounting.model.document.RealizationDocument;
+import rest_api_warehouse_accounting.model.document.OrderDocument;
 import rest_api_warehouse_accounting.service.RealizationService;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/realization")
@@ -42,10 +40,10 @@ public class RealizationController {
      * @return HTTP-ответ с созданным документом или ошибкой
      */
     @PostMapping("/documents")
-    public ResponseEntity<?> createRealizationDocument(@Valid @RequestBody RealizationDocument document) {
+    public ResponseEntity<?> createRealizationDocument(@Valid @RequestBody OrderDocument document) {
         try {
             // Передаем документ реализации в сервис для обработки
-            RealizationDocument createdDocument = realizationService.createRealizationDocument(document);
+            OrderDocument createdDocument = realizationService.createRealizationDocument(document);
             // Возвращаем HTTP 201 (Created) с данными созданного документа
             return ResponseEntity.status(HttpStatus.CREATED).body(createdDocument);
         } catch (IllegalArgumentException e) {

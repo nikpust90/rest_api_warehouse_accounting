@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import rest_api_warehouse_accounting.model.directory.Product;
+import rest_api_warehouse_accounting.model.referenceBooks.Product;
 import rest_api_warehouse_accounting.service.ProductService;
 
 // Аннотация @RestController указывает, что данный класс является REST-контроллером
@@ -25,7 +25,7 @@ public class ProductController {
      *
      * @return ResponseEntity со списком документов или сообщением об ошибке.
      */
-    @GetMapping("/products") // Обработчик GET-запросов по пути "/api/directory/products"
+    @GetMapping("/products") // Обработчик GET-запросов по пути "/api/referenceBooks/products"
     public ResponseEntity<?> getAllProducts() {
         try {
             // Запрашиваем список всех товаров из сервиса

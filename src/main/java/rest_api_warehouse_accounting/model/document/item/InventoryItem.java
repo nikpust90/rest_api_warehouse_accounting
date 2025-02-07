@@ -1,12 +1,11 @@
 package rest_api_warehouse_accounting.model.document.item;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import rest_api_warehouse_accounting.model.directory.Product;
+import rest_api_warehouse_accounting.model.referenceBooks.Product;
 import rest_api_warehouse_accounting.model.document.InventoryDocument;
 
 @Entity
