@@ -246,12 +246,11 @@ public class IncomingService {
             if (stock == null) {
                 stock = new Stock(
                         null, product, bin, bin.getShelf(), bin.getShelf().getWarehouse(),
-                        0, incomingDocument, null
+                        itemDto.getQuantity(), incomingDocument, null
                 );
             }
 
-            // Увеличиваем количество товара
-            stock.setQuantity(itemDto.getQuantity());
+
 
             updatedStocks.add(stock);
         }

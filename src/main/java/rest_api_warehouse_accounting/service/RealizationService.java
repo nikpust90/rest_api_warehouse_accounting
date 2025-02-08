@@ -18,13 +18,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RealizationService {
 
-    @Autowired
-    private RealizationDocumentRepository realizationDocumentRepository;
-
-    @Autowired
-    private ProductRepository productRepository;
-
-
+    private final RealizationDocumentRepository realizationDocumentRepository;
+    private final ProductRepository productRepository;
 
     /**
      * Создает документ реализации и обновляет количество товара на складе.
