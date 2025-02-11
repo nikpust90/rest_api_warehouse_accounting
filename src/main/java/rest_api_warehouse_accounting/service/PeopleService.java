@@ -5,9 +5,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import rest_api_warehouse_accounting.dto.PersonDTO;
-import rest_api_warehouse_accounting.model.Person;
-import rest_api_warehouse_accounting.repositories.PeopleRepository;
+import rest_api_warehouse_accounting.dto.referenceBooks.PersonDto;
+import rest_api_warehouse_accounting.model.referenceBooks.Person;
+import rest_api_warehouse_accounting.repositories.referenceBooks.PeopleRepository;
 
 import java.util.Optional;
 
@@ -46,12 +46,12 @@ public class PeopleService {
     }
 
 
-    public Person convertDTOToPerson(PersonDTO personDTO) {
+    public Person convertDTOToPerson(PersonDto personDTO) {
         return modelMapper.map(personDTO, Person.class);
     }
 
-    public PersonDTO convertPersonToDTO(Person byId) {
-        return modelMapper.map(byId, PersonDTO.class);
+    public PersonDto convertPersonToDTO(Person byId) {
+        return modelMapper.map(byId, PersonDto.class);
     }
 
 }

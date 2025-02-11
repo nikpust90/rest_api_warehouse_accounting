@@ -13,11 +13,11 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import rest_api_warehouse_accounting.dto.AuthenticationDTO;
-import rest_api_warehouse_accounting.dto.PersonDTO;
-import rest_api_warehouse_accounting.dto.PersonDeleteDTO;
-import rest_api_warehouse_accounting.dto.PersonUpdateDTO;
-import rest_api_warehouse_accounting.model.Person;
+import rest_api_warehouse_accounting.dto.AuthenticationDto;
+import rest_api_warehouse_accounting.dto.referenceBooks.PersonDto;
+import rest_api_warehouse_accounting.dto.referenceBooks.PersonDeleteDto;
+import rest_api_warehouse_accounting.dto.referenceBooks.PersonUpdateDto;
+import rest_api_warehouse_accounting.model.referenceBooks.Person;
 import rest_api_warehouse_accounting.service.PeopleService;
 import rest_api_warehouse_accounting.util.JWTUtil;
 import rest_api_warehouse_accounting.validation.PersonValidator;
@@ -38,7 +38,7 @@ public class AuthController {
 
 
     @PostMapping("/login") // Обрабатываем POST-запрос по адресу /login
-    public ResponseEntity<Map<String, String>> login(@RequestBody AuthenticationDTO authDTO) {
+    public ResponseEntity<Map<String, String>> login(@RequestBody AuthenticationDto authDTO) {
         Logger log = LoggerFactory.getLogger(AuthController.class);
 
         // Логируем попытку входа
@@ -82,7 +82,7 @@ public class AuthController {
     }
 
     @PostMapping("/registration") // Обрабатываем POST-запрос по адресу /registration
-    public Map<String, String> register(@RequestBody @Valid PersonDTO personDTO,
+    public Map<String, String> register(@RequestBody @Valid PersonDto personDTO,
                                         BindingResult bindingResult) {
 
         // Конвертируем DTO в сущность Person (чтобы затем работать с ней)
@@ -121,7 +121,7 @@ public class AuthController {
 
     @PostMapping("/updateUser") // Обрабатываем POST-запрос по адресу /updateUser
     @PreAuthorize("hasRole('ADMIN')")
-    public Map<String, Object> updateUser(@RequestBody @Valid PersonUpdateDTO personDTO,
+    public Map<String, Object> updateUser(@RequestBody @Valid PersonUpdateDto personDTO,
                                           BindingResult bindingResult) {
 
         // Ищем пользователя по username в базе данных
@@ -172,7 +172,7 @@ public class AuthController {
 
     @PostMapping("/deleteUser") // Обрабатываем POST-запрос по адресу /deleteUser
     @PreAuthorize("hasRole('ADMIN')")
-    public Map<String, Object> deleteUser(@RequestBody @Valid PersonDeleteDTO personDTO,
+    public Map<String, Object> deleteUser(@RequestBody @Valid PersonDeleteDto personDTO,
                                           BindingResult bindingResult) {
 
         // Проверяем, есть ли ошибки валидации (например, пустые поля)

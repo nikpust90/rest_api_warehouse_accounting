@@ -1,0 +1,11 @@
+package rest_api_warehouse_accounting.repositories.document;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import rest_api_warehouse_accounting.model.document.InventoryDocument;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
+
+public interface InventoryDocumentRepository extends JpaRepository<InventoryDocument, Long> {
+    Optional<Object> findByDocumentNumberAndCreatedAt(String documentNumber, LocalDateTime documentDate);
+}
