@@ -14,8 +14,6 @@ import java.util.List;
 @Entity
 @Table(name = "inventory_document") // Указывает имя таблицы в БД
 @Data
-@Getter
-@Setter
 public class InventoryDocument {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

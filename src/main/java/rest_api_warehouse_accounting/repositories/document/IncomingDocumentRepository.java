@@ -14,7 +14,5 @@ import java.util.Optional;
 public interface IncomingDocumentRepository extends JpaRepository<IncomingDocument, Long> {
     Optional<IncomingDocument> findByDocumentNumberAndCreatedAt(String documentNumber, LocalDateTime createdAt);
 
-    //boolean existsByDocumentNumberAndCreatedAt(void attr0, void attr1);
-
-    boolean existsByDocumentNumberAndCreatedAt(@NotEmpty(message = "Номер документа не может быть пустым") String documentNumber, @NotNull(message = "Дата создания документа обязательна") LocalDateTime createdAt);
+    boolean existsByDocumentNumberAndCreatedAt(String documentNumber, LocalDateTime createdAt);
 }

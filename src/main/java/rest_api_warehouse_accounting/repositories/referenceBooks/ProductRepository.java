@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByQuantityGreaterThan(int i);
+
+    boolean existsByBarcode(String barcode); // Проверка существования штрихкода
 }

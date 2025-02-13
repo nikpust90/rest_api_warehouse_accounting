@@ -1,18 +1,14 @@
 package rest_api_warehouse_accounting.model.referenceBooks;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import rest_api_warehouse_accounting.model.document.item.IncomingItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "bin")

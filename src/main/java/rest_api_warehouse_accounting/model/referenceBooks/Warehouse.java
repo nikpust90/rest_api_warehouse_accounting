@@ -6,10 +6,8 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Data
 @Entity
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "warehouse")

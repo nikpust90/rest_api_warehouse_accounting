@@ -8,8 +8,6 @@ import lombok.Setter;
 @Entity
 @Table(name = "product") // Задаем имя таблицы
 @Data
-@Getter
-@Setter
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,4 +25,7 @@ public class Product {
 
     @Column(name = "quantity", nullable = false) // Количество товара, обязательное поле
     private int quantity;
+
+    @Column(name = "barcode", unique = true, length = 50) // Штрихкод товара, уникальный
+    private String barcode;
 }

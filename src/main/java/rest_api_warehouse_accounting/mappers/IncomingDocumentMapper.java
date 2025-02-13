@@ -42,7 +42,7 @@ public class IncomingDocumentMapper {
 
     public IncomingItemDto toDTO(IncomingItem item) {
         return new IncomingItemDto(
-                new ProductDto(item.getProduct().getId(), item.getProduct().getName(), item.getProduct().getQuantity()), // ✅ Преобразуем `Product` в `ProductDto`
+                new ProductDto(item.getProduct().getId(), item.getProduct().getName(), item.getProduct().getQuantity(), item.getProduct().getBarcode()), // ✅ Преобразуем `Product` в `ProductDto`
                 item.getQuantity(),
                 new BinDto(item.getBin().getBinId(), item.getBin().getBinName(), item.getBin().getShelf().getShelfId(), item.getBin().getQrCode()) // ✅ Преобразуем `Bin` в `BinDto`
         );

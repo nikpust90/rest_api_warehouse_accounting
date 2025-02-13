@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import rest_api_warehouse_accounting.model.document.IncomingDocument;
-import rest_api_warehouse_accounting.model.document.OrderDocument;
+import rest_api_warehouse_accounting.model.document.OutgoingDocument;
 import rest_api_warehouse_accounting.model.referenceBooks.Bin;
 import rest_api_warehouse_accounting.model.referenceBooks.Product;
 import rest_api_warehouse_accounting.model.referenceBooks.Shelf;
@@ -46,6 +46,6 @@ public class Stock {
     private IncomingDocument incomingDocument;
 
     @ManyToOne
-    @JoinColumn(name = "order_document_id")
-    private OrderDocument orderDocument;
+    @JoinColumn(name = "outgoing_document_id")
+    private OutgoingDocument outgoingDocument;
 }

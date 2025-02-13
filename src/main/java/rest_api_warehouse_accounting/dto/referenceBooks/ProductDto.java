@@ -12,4 +12,5 @@ public class ProductDto {
     private Long id;
     private String name;
     private int quantity;
+    private String barcode; // Штрихкод (опционально, если нужно передавать извне)
 }

@@ -11,8 +11,6 @@ import rest_api_warehouse_accounting.model.referenceBooks.Shelf;
 
 
 @Data
-@Getter
-@Setter
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor

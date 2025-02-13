@@ -22,4 +22,11 @@ public interface StockRepository extends JpaRepository<Stock, Long> {
             @Param("binIds") List<String> binIds,
             @Param("incomingDocumentId") Long incomingDocumentId
     );
+
+    @Query("SELECT s FROM Stock s WHERE s.product.id IN :productIds AND s.bin.binId IN :binIds AND s.outgoingDocument.id = :outgoingDocumentId")
+    List<Stock> findAllByProductIdsAndBinIdsAndOutgoingDocument(
+            @Param("productIds") List<Long> productIds,
+            @Param("binIds") List<String> binIds,
+            @Param("outgoingDocumentId") Long outgoingDocumentId
+    );
 }

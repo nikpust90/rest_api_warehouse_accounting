@@ -31,6 +31,14 @@ public class ProductService {
         product.setSku(productDetails.getSku());
         product.setCategory(productDetails.getCategory());
 
+        // Генерация уникального штрихкода
+        String barcode;
+        do {
+            barcode = BarcodeGenerator.generateBarcode();
+        } while (productRepository.existsByBarcode(barcode)); // Проверка уникальности
+
+        product.setBarcode(barcode);
+
         return productRepository.save(product);
     }
 }

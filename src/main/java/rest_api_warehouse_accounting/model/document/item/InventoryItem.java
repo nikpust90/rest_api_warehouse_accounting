@@ -11,8 +11,6 @@ import rest_api_warehouse_accounting.model.document.InventoryDocument;
 @Entity
 @Table(name = "inventory_item") // Имя таблицы в БД
 @Data
-@Getter
-@Setter
 public class InventoryItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
