@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rest_api_warehouse_accounting.dto.document.OutgoingDocumentDto;
+import rest_api_warehouse_accounting.model.document.InventoryDocument;
 import rest_api_warehouse_accounting.service.OutgoingService;
 
 
@@ -58,5 +59,18 @@ public class OutgoingController {
     public ResponseEntity<OutgoingDocumentDto> getOutgoingDocumentById(@PathVariable Long id) {
         OutgoingDocumentDto document = outgoingService.getOutgoingDocumentById(id);
         return ResponseEntity.ok(document);
+    }
+
+    /**
+     * Обновление существующего документа списания товаров.
+     *
+     * @param document объект OutgoingDocumentDto из тела запроса.
+     * @return обновленный документ.
+     */
+    @PutMapping
+    public ResponseEntity<OutgoingDocumentDto> updateOutgoingDocument(
+            @Valid @RequestBody OutgoingDocumentDto document) {
+        OutgoingDocumentDto updatedDocument = outgoingService.updateInventoryDocument(document);
+        return ResponseEntity.ok(updatedDocument);
     }
 }

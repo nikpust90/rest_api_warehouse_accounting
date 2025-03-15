@@ -30,7 +30,6 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-@Transactional
 public class OutgoingService {
 
     private final OutgoingDocumentRepository repository;
@@ -54,6 +53,29 @@ public class OutgoingService {
                 .orElseThrow(() -> new IllegalArgumentException("Документ списания с ID " + id + " не найден"));
         return mapper.toDTO(document);
     }
+
+    /**
+     * Обновляет существующий документ списания товаров.
+     *
+     * @param documentDto DTO документа списания товаров.
+     * @return обновленный DTO документа.
+     */
+    @Transactional
+    public OutgoingDocumentDto updateInventoryDocument(OutgoingDocumentDto documentDto) {
+        // Находим существующий документ
+        OutgoingDocument existingDocument = repository.findById(documentDto.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Document not found with id: " + documentDto.getId()));
+
+        // Обновляем документ на основе данных из DTO
+        mapper.updateEntityFromDto(existingDocument, documentDto);
+
+        // Сохраняем обновленный документ
+        OutgoingDocument updatedDocument = repository.save(existingDocument);
+
+        // Преобразуем обновленную сущность в DTO
+        return mapper.toDTO(updatedDocument);
+    }
+
 
     /**
      * Создает новый документ списания и обновляет складские остатки.

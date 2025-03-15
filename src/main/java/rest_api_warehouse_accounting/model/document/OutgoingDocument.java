@@ -11,7 +11,6 @@ import java.util.List;
 
 
 @Data
-
 @Entity
 @Table(name = "outgoing_document")
 public class OutgoingDocument {

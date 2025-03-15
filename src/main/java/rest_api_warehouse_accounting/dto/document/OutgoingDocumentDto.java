@@ -13,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OutgoingDocumentDto {
+    private Long id; // Идентификатор документа (новое поле)
     private String documentNumber; // Номер документа списания
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
@@ -21,4 +22,6 @@ public class OutgoingDocumentDto {
     private List<OutgoingItemDto> items; // Список позиций списания
 
     private String warehouseId; // Идентификатор склада
+
+
 }
